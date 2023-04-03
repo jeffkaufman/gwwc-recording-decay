@@ -96,3 +96,13 @@ ax.set_xlabel("years since pledging")
 ax.set_title("GWWC Reporting Fraction Decrease By Cohort Over Time")
 fig.savefig("gwwc-recording-decay-by-cohort-big.png", dpi=180)
 plt.clf()
+
+weight = 0
+weighted_decay_after_5y = 0
+for cohort in full_decay:
+    for pledge_year, decay in enumerate(full_decay[cohort]):
+        if pledge_year < 5: continue
+        weighted_decay_after_5y += decay * cohort_sizes[cohort]
+        weight +=cohort_sizes[cohort]
+
+print ("%.1f%%" % (weighted_decay_after_5y/weight * 100))
