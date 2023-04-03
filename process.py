@@ -7,6 +7,10 @@ import matplotlib.ticker as mtick
 
 # cohort year -> pledge year -> fraction
 reporting = {}
+# Pulled from
+# https://docs.google.com/document/d/1l0RjbMLXjwjy5Pqg4aLe-_YDLXw8T3DT5QP0AQGYHTo/edit
+# linked from
+# https://forum.effectivealtruism.org/posts/EipE75vsDuD7bdJar/gwwc-s-2020-2022-impact-evaluation-executive-summary
 with open("gwwc-reporting-fraction-by-cohort-and-year.tsv") as inf:
     for line in inf:
         if line.startswith("Cohort"): continue
@@ -17,6 +21,16 @@ with open("gwwc-reporting-fraction-by-cohort-and-year.tsv") as inf:
 
 # cohort year -> size
 cohort_sizes = Counter()
+# Manually extracted from https://www.givingwhatwecan.org/about-us/members
+# 1. Expanded membership list
+# 2. Used DOM inspector to remove companies and trial members
+# 3. Used console to run:
+# a = []
+# for (let x of document.getElementsByClassName("text-grey-dark")) {
+#   a.push(x.innerText)
+# }
+# counter= {}
+# for (x of a) { if (counter[x] == undefined) { counter[x] = 0 } counter[x] ++ }
 with open("membership-dates.json") as inf:
     for month_year, count in json.load(inf).items():
         month_year = {
